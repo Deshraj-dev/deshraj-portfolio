@@ -1,0 +1,57 @@
+import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
+import "./styles.css";
+
+const projects = [
+  { n:"01", type:"MOBILE", name:"TimeSlice", desc:"A productivity app concept for planning activities, focus sessions, and time insights.", tags:["React Native","Firebase","Firestore"], symbol:"◷", cls:"time", url:"https://github.com/Deshraj-dev/TimeSlice" },
+  { n:"02", type:"WEB", name:"StreamVibe", desc:"A responsive streaming discovery UI with route-based pages and interactive sliders.", tags:["React.js","React Router","Swiper"], symbol:"▶", cls:"stream", url:"https://github.com/Deshraj-dev/StreamVibe-React-Streaming-Website" },
+  { n:"03", type:"WEB", name:"Luminae", desc:"A modern storefront UI with API-driven product browsing and shopping-cart interactions.", tags:["React.js","REST API","CSS"], symbol:"✳", cls:"lumi", url:"https://github.com/Deshraj-dev/luminae-ecommerce-website" },
+  { n:"04", type:"WEB", name:"Furniro", desc:"A responsive multi-page furniture website with product-focused layouts and reusable sections.", tags:["React.js","React Router","Swiper"], symbol:"⌂", cls:"furn", url:"https://github.com/Deshraj-dev/Furnio-Responsive-Website" },
+  { n:"05", type:"MOBILE", name:"To-Do App", desc:"A task-management app with authentication screens, CRUD flows, and locally persisted data.", tags:["React Native","AsyncStorage","Navigation"], symbol:"✓", cls:"todo", url:"https://github.com/Deshraj-dev/to-do-app" },
+  { n:"06", type:"MOBILE", name:"Calculator", desc:"A React Native project exploring app UI, state management, API integration, and sign-in flows.", tags:["React Native","Redux","REST API"], symbol:"＋", cls:"calc", url:"https://github.com/Deshraj-dev/Calculator" }
+];
+const services = [
+  ["↗","React.js Websites","Responsive landing pages, business websites, and multi-page interfaces designed around your brand."],
+  ["▣","React Native Apps","Cross-platform app screens, navigation flows, authentication, and API integrations."],
+  ["◈","Reusable Templates","Starter kits, UI sections, component libraries, and polished templates to speed up delivery."],
+  ["▤","Admin Panels & Dashboards","Clean dashboard layouts with tables, forms, stats cards, filters, and reusable components."]
+];
+const skills = ["React Native","React.js","JavaScript ES6+","Firebase","REST APIs","Redux","React Navigation","HTML5","CSS3","Git & GitHub","AsyncStorage","Responsive UI"];
+
+function App(){
+  const [filter,setFilter] = useState("ALL");
+  const [menu,setMenu] = useState(false);
+  const [copied,setCopied] = useState(false);
+  const shown = projects.filter(p => filter==="ALL" || p.type===filter);
+  async function copyEmail(){
+    try { await navigator.clipboard.writeText("deshrajstack@gmail.com"); setCopied(true); setTimeout(()=>setCopied(false),1600); }
+    catch { window.location.href="mailto:deshrajstack@gmail.com"; }
+  }
+  return <>
+    <header className="header">
+      <a className="brand" href="#home"><span className="brandIcon">D<span>.</span></span><span>DESHRAJ SINGH<small>DEVELOPER PORTFOLIO</small></span></a>
+      <button className="menuBtn" onClick={()=>setMenu(!menu)} aria-label="Toggle menu">{menu?"×":"☰"}</button>
+      <nav className={menu?"nav open":"nav"}><a href="#work" onClick={()=>setMenu(false)}>Work</a><a href="#services" onClick={()=>setMenu(false)}>Services</a><a href="#about" onClick={()=>setMenu(false)}>About</a><a className="navCta" href="#contact" onClick={()=>setMenu(false)}>Let’s talk ↗</a></nav>
+    </header>
+    <main>
+      <section className="hero wrap" id="home">
+        <div className="heroText"><div className="eyebrow"><i/> AVAILABLE FOR FREELANCE PROJECTS</div><h1>Building digital<br/><em>things that work.</em></h1><p className="lede">I’m Deshraj — a React.js & React Native developer creating useful mobile apps, thoughtful websites, and reusable digital products.</p><div className="actions"><a className="btn primary" href="#work">Explore my work <b>↘</b></a><a className="btn" href="#contact">Start a project <b>↗</b></a></div><div className="meta"><span><b>01</b> MOBILE APPS</span><span><b>02</b> WEB EXPERIENCES</span><span><b>03</b> DIGITAL PRODUCTS</span></div></div>
+        <div className="heroArt"><div className="glow"/><div className="orbit o1"/><div className="orbit o2"/><div className="codeWindow"><div className="windowHead"><span className="dots">● ● ●</span><span>developer.js</span><span className="live">● LIVE</span></div><div className="code"><p><i>01</i> <b>const</b> developer = {"{"}</p><p><i>02</i> &nbsp;name: <strong>'Deshraj'</strong>,</p><p><i>03</i> &nbsp;focus: <strong>'React'</strong>,</p><p><i>04</i> &nbsp;ideas: <label>Infinity</label>,</p><p><i>05</i> &nbsp;build: <u>() =&gt;</u> <strong>'ship it'</strong></p><p><i>06</i> {"}"};</p><p className="comment"><i>07</i> // turning ideas into interfaces</p></div><div className="windowFoot">● JavaScript <span>UTF-8</span><span>Ln 07, Col 1</span></div></div><div className="float f1"><b>▣</b><span>Mobile-first<small>React Native</small></span><i>↗</i></div><div className="float f2"><b>⌘</b><span>Responsive UI<small>React.js</small></span><i>↗</i></div><div className="artCaption">JAIPUR, INDIA <span>BUILD WITH INTENT</span></div></div>
+        <a className="scroll" href="#work"><span/> SCROLL TO EXPLORE</a>
+      </section>
+      <div className="toolstrip"><div className="wrap strip"><small>TOOLS I BUILD WITH</small><b>React.js</b><b>React Native</b><b>JavaScript</b><b>Firebase</b><b>REST APIs</b><b>Redux</b></div></div>
+      <section className="wrap section" id="work"><div className="sectionHead"><div><div className="eyebrow"><label>01 /</label> SELECTED WORK</div><h2>Projects with<br/><em>purpose.</em></h2></div><p>A selection of personal projects where I practice product thinking, interface design, and practical development.</p></div>
+        <div className="filters">{["ALL","MOBILE","WEB"].map(f=><button className={filter===f?"selected":""} onClick={()=>setFilter(f)} key={f}>{f}<span>{f==="ALL"?"06":"03"}</span></button>)}</div>
+        <div className="projectGrid">{shown.map(p=><article className="project" key={p.name}><a className={"projectArt "+p.cls} href={p.url} target="_blank" rel="noreferrer"><div className="artTop"><span>{p.type} / PROJECT</span><b>↗</b></div><div className="artMiddle"><div>{p.symbol}</div><h3>{p.name}</h3><small>{p.name==="TimeSlice"?"PLAN · FOCUS · TRACK":p.name==="StreamVibe"?"DISCOVER YOUR NEXT WATCH":p.name==="Luminae"?"OBJECTS FOR EVERYDAY LIVING":p.name==="Furniro"?"DESIGNED FOR YOUR SPACE":p.name==="To-Do App"?"MAKE SPACE FOR WHAT MATTERS":"SIMPLE. CLEAR. CALCULATED."}</small></div><div className="artBottom">{p.n} / 06 <span>PERSONAL PROJECT</span></div></a><div className="projectInfo"><div className="projectTitle"><small>{p.n}</small><h3>{p.name}</h3><a href={p.url} target="_blank" rel="noreferrer" aria-label={"View "+p.name+" repository"}>↗</a></div><p>{p.desc}</p><div className="tags">{p.tags.map(t=><span key={t}>{t}</span>)}</div><a className="textLink" href={p.url} target="_blank" rel="noreferrer">View repository <b>↗</b></a></div></article>)}</div>
+        <div className="githubBanner"><div><small>MORE CODE, MORE EXPERIMENTS</small><h3>See what I’m building on GitHub.</h3></div><a className="btn" href="https://github.com/Deshraj-dev" target="_blank" rel="noreferrer">Visit GitHub <b>↗</b></a></div>
+      </section>
+      <section className="services section" id="services"><div className="wrap"><div className="sectionHead"><div><div className="eyebrow"><label>02 /</label> WHAT I CAN DO</div><h2>From idea to<br/><em>interface.</em></h2></div><p>Practical development support for founders, small businesses, and teams that need a reliable front-end partner.</p></div><div className="serviceGrid">{services.map((s,i)=><article className="service" key={s[1]}><div className="serviceTop"><b>{s[0]}</b><small>0{i+1}</small></div><h3>{s[1]}</h3><p>{s[2]}</p><a href="#contact">Discuss a project <b>↗</b></a></article>)}</div>
+        <div className="templateBlock"><div className="templateArt"><div className="mini m1"><b/><i/><i/><i/></div><div className="mini m2"><b/><i/><i/></div><div className="mini m3"><b/><i/><i/><i/></div></div><div className="templateText"><small>A SMALL DIGITAL PRODUCT STUDIO</small><h3>Reusable templates.<br/><em>Less setup. More shipping.</em></h3><p>I’m building reusable website sections, dashboard UI blocks, and starter templates that help developers move faster. Ask me about a custom template for your next project.</p><a className="btn primary" href="#contact">Request a template <b>↗</b></a></div></div>
+      </div></section>
+      <section className="wrap section about" id="about"><div><div className="eyebrow"><label>03 /</label> A LITTLE ABOUT ME</div><h2>Curious by nature.<br/><em>Builder by choice.</em></h2><div className="stamp"><b>JS</b><span>LEARN · BUILD<br/>REFINE · REPEAT</span></div></div><div className="aboutText"><p className="aboutLead">I’m a developer based in Jaipur, India, interested in turning everyday problems into clean, usable digital experiences.</p><p>My work spans React Native mobile applications and React.js websites. I enjoy breaking features into manageable pieces, building reusable components, connecting APIs, and polishing the details that make an interface feel considered.</p><p>I’m always learning, shipping projects, and looking to collaborate with people who value clear communication and useful products.</p><div className="skillHead">CURRENT TOOLKIT <span>12 SKILLS</span></div><div className="skills">{skills.map(s=><span key={s}><b>↗</b>{s}</span>)}</div><a className="textLink" href="https://github.com/Deshraj-dev" target="_blank" rel="noreferrer">Explore my code <b>↗</b></a></div></section>
+      <section className="contact" id="contact"><div className="wrap"><div className="eyebrow"><label>04 /</label> HAVE A PROJECT IN MIND?</div><div className="contactMain"><h2>Let’s make<br/><em>something useful.</em></h2><div><p>Have an app idea, a website to launch, or a dashboard that needs a better UI? Tell me a little about it and let’s talk.</p><button className="btn primary email" onClick={copyEmail}>{copied?"Email copied ✓":"deshrajstack@gmail.com"} <b>{copied?"✓":"↗"}</b></button><div className="socials"><a href="https://github.com/Deshraj-dev" target="_blank" rel="noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/deshraj-singh-398949376" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="mailto:deshrajstack@gmail.com">Email ↗</a></div></div></div><div className="contactFoot"><span><i/> OPEN TO FREELANCE & COLLABORATION</span><span>JAIPUR, RAJASTHAN · INDIA</span></div></div></section>
+    </main>
+    <footer className="wrap footer"><a className="brand" href="#home"><span className="brandIcon">D<span>.</span></span><span>DESHRAJ SINGH<small>BUILD WITH INTENT.</small></span></a><span>© {new Date().getFullYear()} Deshraj Singh. Built with React.js.</span><a href="#home">BACK TO TOP ↑</a></footer>
+  </>;
+}
+createRoot(document.getElementById("root")).render(<React.StrictMode><App/></React.StrictMode>);
